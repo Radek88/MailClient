@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="BorderPane" maxHeight="700.0" maxWidth="700.0" minHeight="700.0" minWidth="700.0" prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <center>
+      <AnchorPane prefHeight="656.0" prefWidth="414.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" cache="true" cacheHint="SPEED" cacheShape="false" layoutX="40.0" layoutY="76.0" maxHeight="679.0" minHeight="580.0" prefHeight="580.0" prefWidth="462.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <VBox fillWidth="false" prefHeight="632.0" prefWidth="171.0" HBox.hgrow="NEVER">
+                     <children>
+                        <Label maxHeight="40.0" minHeight="40.0" minWidth="100.0" prefHeight="40.0" prefWidth="50.0" text="Nadawca" textFill="#645959" VBox.vgrow="ALWAYS" />
+                        <ListView fx:id="listOfSenders" cache="true" cacheHint="SPEED" prefHeight="592.0" prefWidth="177.0" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets bottom="-1.0" left="-1.0" right="-1.0" top="-1.0" />
+                           </padding>
+                        </ListView>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox cache="true" cacheHint="SPEED" prefHeight="632.0" prefWidth="225.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label maxHeight="40.0" maxWidth="318.0" minHeight="40.0" minWidth="100.0" prefHeight="40.0" prefWidth="318.0" text="Wiadomość" textFill="#645959" VBox.vgrow="ALWAYS" />
+                        <ListView fx:id="listOfMessages" cache="true" cacheHint="SPEED" fixedCellSize="0.0" prefHeight="592.0" prefWidth="240.0" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets bottom="-1.0" left="-1.0" right="-1.0" top="-1.0" />
+                           </padding>
+                        </ListView>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox fillWidth="false" prefHeight="632.0" prefWidth="164.0" HBox.hgrow="NEVER">
+                     <children>
+                        <Label maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="138.0" text="Data" textFill="#645959" VBox.vgrow="ALWAYS" />
+                        <ListView fx:id="listOfDates" cache="true" cacheHint="SPEED" prefHeight="592.0" prefWidth="136.0" VBox.vgrow="ALWAYS">
+                           <padding>
+                              <Insets bottom="-1.0" left="-1.0" right="-1.0" top="-1.0" />
+                           </padding>
+                        </ListView>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </center>
+   <right>
+      <AnchorPane prefHeight="677.0" prefWidth="112.0" BorderPane.alignment="CENTER" />
+   </right>
+   <left>
+      <AnchorPane prefHeight="526.0" prefWidth="128.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="477.0" prefWidth="165.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="128.0" text="Foldery" textFill="#645959">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
+                  <TreeView fx:id="foldersView" editable="true" fixedCellSize="0.0" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#choiceFolderToShowContent" prefHeight="634.0" prefWidth="168.0" showRoot="false">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </TreeView>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </left>
+   <bottom>
+      <AnchorPane prefHeight="38.0" prefWidth="702.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <top>
+      <AnchorPane maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="702.0" BorderPane.alignment="TOP_CENTER">
+         <children>
+            <MenuBar fx:id="menuBar" minWidth="700.0" pickOnBounds="false" prefHeight="37.0" prefWidth="702.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <menus>
+                <Menu fx:id="MenuBarFile" mnemonicParsing="false" text="Plik">
+                  <items>
+                    <MenuItem fx:id="menu_plik_konfiguracja_button" mnemonicParsing="false" onAction="#configurationChoice" text="Konfiguracja konta" />
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edytuj">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Pomoc">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </children>
+      </AnchorPane>
+   </top>
+</BorderPane>
