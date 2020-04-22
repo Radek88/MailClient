@@ -3,10 +3,7 @@ package sample;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import sample.Model.AccountConfiguration;
@@ -15,22 +12,11 @@ import sample.View.ConfigWindow.ConfigurationWindow;
 import sample.View.Folders.Folders;
 import sample.View.ShowMessages.ShowMessages;
 
-import javax.mail.*;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import javax.mail.Folder;
+import javax.mail.Session;
 
 
 public class Controller extends Thread{
-    public Controller() {
-
-    }
-
-
     @FXML
     private javafx.scene.layout.BorderPane BorderPane = new BorderPane();
     @FXML
@@ -44,23 +30,26 @@ public class Controller extends Thread{
     @FXML
     private ListView<String> listOfMessages;
     @FXML
-    private ListView<Date> listOfDates;
+    private ListView<String> listOfDates;
     @FXML
     private ListView<String> listOfSenders;
-
-    private AccountConfiguration accountConfiguration = new AccountConfiguration();
-    private Session session;
-    private SessionCreating sessionCreating = new SessionCreating();
-    private  Folders folders;
-
-
+    @FXML
+    private TextArea displayText;
+    public static AccountConfiguration accountConfiguration = new AccountConfiguration();
+    private static SessionCreating sessionCreating = new SessionCreating();
+    public static Session session = sessionCreating.returnSession();
+    private Folders folders = new Folders();
     private Thread choiceFolderThread;
+    private ShowMessages showMessages = new ShowMessages();
 
+
+
+    public Controller() {
+
+    }
 
     public void initialize() {
-        folders = new Folders();
-        createView();
-
+        Platform.runLater(this::createView);
     }
 
     @FXML
@@ -72,19 +61,26 @@ public class Controller extends Thread{
 
     @FXML
     void choiceFolderToShowContent(MouseEvent event) {
-        clearLists();
+
         if (event.getClickCount() == 2) {
             //
             //
             // problem with multi threads adding items from different folders to the same list!!!
             //
             //
+            clearLists();
             choiceFolderThread = new Thread(() -> {
 
                 String folderToShow = foldersView.getSelectionModel().getSelectedItem().getValue().getFullName();
                 folders.showMessagesInTable(folderToShow);
             });
             choiceFolderThread.start();
+        }
+    }
+    @FXML
+    void displayMessage(MouseEvent event) {
+        if(event.getClickCount() == 2){
+
         }
     }
 
@@ -113,11 +109,11 @@ public class Controller extends Thread{
         this.listOfMessages = listOfMessages;
     }
 
-    public ListView<Date> getListOfDates() {
+    public ListView<String> getListOfDates() {
         return listOfDates;
     }
 
-    public void setListOfDates(ListView<Date> listOfDates) {
+    public void setListOfDates(ListView<String> listOfDates) {
         this.listOfDates = listOfDates;
     }
 
@@ -129,7 +125,13 @@ public class Controller extends Thread{
         this.listOfSenders = listOfSenders;
     }
 
-    public TreeView<Folder> getFoldersView() {
-        return foldersView;
+    public TreeView<Folder> getFoldersView() {return foldersView;   }
+
+    public TextArea getDisplayText() {
+        return displayText;
+    }
+
+    public void setDisplayText(TextArea displayText) {
+        this.displayText = displayText;
     }
 }

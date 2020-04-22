@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -17,7 +18,7 @@
    <center>
       <AnchorPane prefHeight="656.0" prefWidth="414.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" cache="true" cacheHint="SPEED" cacheShape="false" layoutX="40.0" layoutY="76.0" maxHeight="679.0" minHeight="580.0" prefHeight="580.0" prefWidth="462.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <HBox alignment="CENTER" cache="true" cacheHint="SPEED" cacheShape="false" layoutX="40.0" layoutY="76.0" maxHeight="400.0" maxWidth="400.0" minHeight="400.0" minWidth="400.0" prefHeight="400.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <VBox fillWidth="false" prefHeight="632.0" prefWidth="171.0" HBox.hgrow="NEVER">
                      <children>
@@ -27,51 +28,57 @@
                               <Insets />
                            </VBox.margin>
                            <padding>
-                              <Insets bottom="-1.0" left="-1.0" right="-1.0" top="-1.0" />
+                              <Insets bottom="5.0" left="5.0" right="1.0" top="5.0" />
                            </padding>
                         </ListView>
                      </children>
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
+                     <padding>
+                        <Insets left="5.0" right="1.0" />
+                     </padding>
                   </VBox>
                   <VBox cache="true" cacheHint="SPEED" prefHeight="632.0" prefWidth="225.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Label maxHeight="40.0" maxWidth="318.0" minHeight="40.0" minWidth="100.0" prefHeight="40.0" prefWidth="318.0" text="Wiadomość" textFill="#645959" VBox.vgrow="ALWAYS" />
-                        <ListView fx:id="listOfMessages" cache="true" cacheHint="SPEED" fixedCellSize="0.0" prefHeight="592.0" prefWidth="240.0" VBox.vgrow="ALWAYS">
+                        <ListView fx:id="listOfMessages" cache="true" cacheHint="SPEED" fixedCellSize="0.0" onMouseClicked="#displayMessage" prefHeight="592.0" prefWidth="240.0" VBox.vgrow="ALWAYS">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
                            <padding>
-                              <Insets bottom="-1.0" left="-1.0" right="-1.0" top="-1.0" />
+                              <Insets bottom="5.0" left="1.0" right="1.0" top="5.0" />
                            </padding>
                         </ListView>
                      </children>
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
+                     <padding>
+                        <Insets left="1.0" right="1.0" />
+                     </padding>
                   </VBox>
                   <VBox fillWidth="false" prefHeight="632.0" prefWidth="164.0" HBox.hgrow="NEVER">
                      <children>
                         <Label maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="138.0" text="Data" textFill="#645959" VBox.vgrow="ALWAYS" />
                         <ListView fx:id="listOfDates" cache="true" cacheHint="SPEED" prefHeight="592.0" prefWidth="136.0" VBox.vgrow="ALWAYS">
                            <padding>
-                              <Insets bottom="-1.0" left="-1.0" right="-1.0" top="-1.0" />
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
                         </ListView>
                      </children>
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
+                     <padding>
+                        <Insets left="1.0" right="1.0" />
+                     </padding>
                   </VBox>
                </children>
             </HBox>
          </children>
       </AnchorPane>
    </center>
-   <right>
-      <AnchorPane prefHeight="677.0" prefWidth="112.0" BorderPane.alignment="CENTER" />
-   </right>
    <left>
       <AnchorPane prefHeight="526.0" prefWidth="128.0" BorderPane.alignment="CENTER">
          <children>
@@ -85,23 +92,32 @@
                         <Insets left="5.0" />
                      </padding>
                   </Label>
-                  <TreeView fx:id="foldersView" editable="true" fixedCellSize="0.0" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#choiceFolderToShowContent" prefHeight="634.0" prefWidth="168.0" showRoot="false">
+                  <TreeView fx:id="foldersView" editable="true" fixedCellSize="0.0" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#choiceFolderToShowContent" prefHeight="634.0" prefWidth="168.0" showRoot="false" VBox.vgrow="ALWAYS">
                      <padding>
-                        <Insets left="10.0" />
+                        <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                      </padding>
                   </TreeView>
                </children>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
             </VBox>
          </children>
       </AnchorPane>
    </left>
    <bottom>
-      <AnchorPane prefHeight="38.0" prefWidth="702.0" BorderPane.alignment="CENTER" />
+      <AnchorPane minHeight="10.0" prefHeight="166.0" prefWidth="700.0">
+         <children>
+            <TextArea fx:id="displayText" layoutX="-1.0" layoutY="30.0" minWidth="50.0" prefHeight="217.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="50.0" right="50.0" top="5.0" />
+         </padding></AnchorPane>
    </bottom>
    <top>
       <AnchorPane maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="702.0" BorderPane.alignment="TOP_CENTER">
          <children>
-            <MenuBar fx:id="menuBar" minWidth="700.0" pickOnBounds="false" prefHeight="37.0" prefWidth="702.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <MenuBar fx:id="menuBar" layoutY="-1.0" minWidth="700.0" pickOnBounds="false" prefHeight="37.0" prefWidth="702.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
               <menus>
                 <Menu fx:id="MenuBarFile" mnemonicParsing="false" text="Plik">
                   <items>
