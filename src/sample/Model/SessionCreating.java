@@ -10,9 +10,13 @@ import java.util.Properties;
 @Getter
 public class SessionCreating{
 
-    private Session session;
+    private  Session session;
     private final AccountConfiguration accountConfiguration = new AccountConfiguration();
     final Properties properties = accountConfiguration.configuredProperties();
+
+    public SessionCreating(){
+
+    }
 
     public void createSession() {
 

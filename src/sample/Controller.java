@@ -1,22 +1,25 @@
 package sample;
 
-import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.web.WebView;
 import sample.Model.AccountConfiguration;
+import sample.Model.SendingMail.MessageCreating;
+import sample.View.MessageModel;
 import sample.Model.SessionCreating;
 import sample.View.ConfigWindow.ConfigurationWindow;
-import sample.View.Folders.Folders;
-import sample.View.ShowMessages.ShowMessages;
 
-import javax.mail.Folder;
-import javax.mail.Session;
+import javax.mail.*;
+import java.io.IOException;
+import java.util.Date;
 
 
-public class Controller extends Thread{
+public class Controller extends Thread {
     @FXML
     private javafx.scene.layout.BorderPane BorderPane = new BorderPane();
     @FXML
@@ -26,30 +29,35 @@ public class Controller extends Thread{
     @FXML
     private MenuItem menu_plik_konfiguracja_button = new MenuItem();
     @FXML
-    private TreeView<Folder> foldersView;
+    private TableView<MessageModel> messageTable;
     @FXML
-    private ListView<String> listOfMessages;
+    private TableColumn<MessageModel, String> fromColumn;
     @FXML
-    private ListView<String> listOfDates;
+    private TableColumn<MessageModel, String> subjectColumn;
     @FXML
-    private ListView<String> listOfSenders;
+    private TableColumn<MessageModel, Date> dateColumn;
+    @FXML
+    private WebView webView;
+    @FXML
+    private TextField fromAddresses;
+    @FXML
+    private TextField textSubject;
     @FXML
     private TextArea displayText;
     public static AccountConfiguration accountConfiguration = new AccountConfiguration();
     private static SessionCreating sessionCreating = new SessionCreating();
     public static Session session = sessionCreating.returnSession();
-    private Folders folders = new Folders();
-    private Thread choiceFolderThread;
-    private ShowMessages showMessages = new ShowMessages();
+    private Content content = new Content();
+    @FXML
+    private ListView<String> listOfFolders;
+    @FXML
+    private Button newMessage;
 
-
-
-    public Controller() {
-
-    }
 
     public void initialize() {
-        Platform.runLater(this::createView);
+        SessionCreating createSession = new SessionCreating();
+        content.createContent();
+        constructViewOfFolder();
     }
 
     @FXML
@@ -59,73 +67,56 @@ public class Controller extends Thread{
 
     }
 
-    @FXML
-    void choiceFolderToShowContent(MouseEvent event) {
+    private void constructViewOfFolder() {
+        Content.listOfFoldersWithMessages.keySet().forEach(s -> listOfFolders.getItems().add(s));
 
-        if (event.getClickCount() == 2) {
-            //
-            //
-            // problem with multi threads adding items from different folders to the same list!!!
-            //
-            //
-            clearLists();
-            choiceFolderThread = new Thread(() -> {
-
-                String folderToShow = foldersView.getSelectionModel().getSelectedItem().getValue().getFullName();
-                folders.showMessagesInTable(folderToShow);
-            });
-            choiceFolderThread.start();
-        }
-    }
-    @FXML
-    void displayMessage(MouseEvent event) {
-        if(event.getClickCount() == 2){
-
-        }
     }
 
     @FXML
-    private void createView() {
-
-        folders.createFoldersView();
-        folders.showMessagesInTable("INBOX");
-
-    }
-
-
-    private void clearLists() {
-        listOfMessages.getItems().clear();
-        listOfDates.getItems().clear();
-        listOfSenders.getItems().clear();
-
+    void choiceFolder(MouseEvent event) {
+        String folder = listOfFolders.getSelectionModel().getSelectedItem();
+        ObservableList<MessageModel> list = Content.listOfFoldersWithMessages.get(folder);
+        showTable(list);
 
     }
 
-    public ListView<String> getListOfMessages() {
-        return listOfMessages;
+    private void showTable(ObservableList<MessageModel> list) {
+        setCellValueFactory();
+        messageTable.setItems(list);
+
     }
 
-    public void setListOfMessages(ListView<String> listOfMessages) {
-        this.listOfMessages = listOfMessages;
+    private void setCellValueFactory() {
+        subjectColumn.setCellValueFactory(new PropertyValueFactory<>("subject"));
+        fromColumn.setCellValueFactory(new PropertyValueFactory<>("fromString"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("receivedDate"));
     }
 
-    public ListView<String> getListOfDates() {
-        return listOfDates;
+
+    @FXML
+    void choiceMessage(MouseEvent event) throws MessagingException, IOException {
+        MessageModel userChoice = messageTable.getSelectionModel().getSelectedItem();
+        if(userChoice != null){
+        //Show from
+        String from = userChoice.getFromString();
+        fromAddresses.setText(from);
+        //Show subject
+        String subject = userChoice.getSubject();
+        textSubject.setText(subject);
+        // Show content
+        Object messageContent = userChoice.getContent();
+        StringBuffer message = content.convertMultiPartToString(messageContent);
+        webView.getEngine().loadContent(message.toString());}
     }
 
-    public void setListOfDates(ListView<String> listOfDates) {
-        this.listOfDates = listOfDates;
+    @FXML
+    void createNewMessage(MouseEvent event) {
+        MessageCreating createMessage = new MessageCreating();
+        createMessage.showWindow();
     }
 
-    public ListView<String> getListOfSenders() {
-        return listOfSenders;
-    }
 
-    public void setListOfSenders(ListView<String> listOfSenders) {
-        this.listOfSenders = listOfSenders;
-    }
 
-    public TreeView<Folder> getFoldersView() {return foldersView;   }
 
     public TextArea getDisplayText() {
         return displayText;

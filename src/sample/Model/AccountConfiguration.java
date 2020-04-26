@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.Properties;
 
 public class AccountConfiguration{
-    private  String user;
+    public static  String user;
     private  String password;
     private  String hostForSend;
     private  String portForSend;

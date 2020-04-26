@@ -1,8 +1,8 @@
-emailusedforsimpletests@gmail.com
-!13gHiU_3240
-imap.gmail.com
+poczta34568@wp.pl
+32_12!kliuMPU
+imap.wp.pl
 993
-smtp.gmail.com
+smtp.wp.pl
 465
 true
 true
