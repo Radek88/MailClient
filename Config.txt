@@ -1,5 +1,4 @@
 poczta34568@wp.pl
-32_12!kliuMPU
 imap.wp.pl
 993
 smtp.wp.pl
